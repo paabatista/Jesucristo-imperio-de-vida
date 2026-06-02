@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -207,7 +207,7 @@ body.admin .admin-tools{display:flex}
 .field label{display:block;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:7px}
 .field input,.field textarea{width:100%;padding:11px 13px;background:rgba(0,0,0,.35);border:1px solid var(--line);border-radius:3px;color:var(--cream);font-family:var(--body);font-size:.92rem;transition:.25s}
 .field input:focus,.field textarea:focus{outline:none;border-color:var(--gold)}
-.field textarea{resize:vertical;min-height:78px}
+.field textarea{resize:vertical;min-height:78px}.field select{width:100%;padding:11px 13px;background:rgba(0,0,0,.35);border:1px solid var(--line);border-radius:3px;color:var(--cream);font-family:var(--body);font-size:.92rem;transition:.25s;cursor:pointer}.field select:focus{outline:none;border-color:var(--gold)}
 .field .row{display:flex;gap:12px}
 .field .row>div{flex:1}
 .modal-actions{display:flex;gap:12px;margin-top:24px}
@@ -375,47 +375,15 @@ footer{background:#08050a;border-top:1px solid var(--line);padding:70px 0 34px}
       <h2 class="title reveal" style="margin-top:16px">Nuestros <em>Servicios</em></h2>
     </div>
 
-    <div class="serv-group reveal">
-      <div class="gh"><b>Presencial</b><span class="tag">En el templo</span></div>
-      <div class="cards">
-        <div class="card">
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v9h14v-9"/><path d="M9.5 19v-5h5v5"/></svg></div>
-          <span class="day">Domingo</span>
-          <h4>Domingo Familiar</h4>
-          <span class="time"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:15px;height:15px;vertical-align:-2px"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 10:00 AM</span>
-        </div>
-        <div class="card">
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2s5 4 5 9a5 5 0 0 1-10 0c0-1.5.7-2.8 1.5-3.5C8.5 9 9 11 10 11c0-2 1-5 2-9Z"/></svg></div>
-          <span class="day">Miércoles</span>
-          <h4>Oración y Liberación</h4>
-          <span class="time"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:15px;height:15px;vertical-align:-2px"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 6:30 PM</span>
-        </div>
-      </div>
-    </div>
+    <div id="servWrap"></div>
 
-    <div class="serv-group reveal">
-      <div class="gh"><b>Vía Zoom</b><span class="tag zoom">En línea</span></div>
-      <div class="cards">
-        <div class="card zoom">
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2s5 4 5 9a5 5 0 0 1-10 0c0-1.5.7-2.8 1.5-3.5C8.5 9 9 11 10 11c0-2 1-5 2-9Z"/></svg></div>
-          <span class="day">Jueves</span>
-          <h4>Ayunos</h4>
-          <span class="time"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:15px;height:15px;vertical-align:-2px"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 9:00 AM - 12 MD</span>
-        </div>
-        <div class="card zoom">
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3v8"/><path d="M8 7h8"/><path d="M6 21c0-4 2.7-6 6-6s6 2 6 6"/><path d="M12 11c-1.5 1.5-3 2.5-3 4"/><path d="M12 11c1.5 1.5 3 2.5 3 4"/></svg></div>
-          <span class="day">Lun · Mart · Miér · Vier</span>
-          <h4>Clamores</h4>
-          <span class="time"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:15px;height:15px;vertical-align:-2px"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 9:00 – 10:00 AM</span>
-        </div>
-        <div class="card zoom">
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5Z"/><path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H13v15h5.5a1.5 1.5 0 0 1 1.5 1.5Z"/></svg></div>
-          <span class="day">Viernes</span>
-          <h4>Escuela de Jesús</h4>
-          <span class="time"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:15px;height:15px;vertical-align:-2px"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 7:00 PM</span>
-        </div>
-      </div>
+    <div class="admin-tools">
+      <button class="mini" id="addService">+ Nuevo servicio</button>
+      <button class="mini" id="exportServices">Exportar respaldo</button>
+      <button class="mini" id="importServices">Importar respaldo</button>
+      <button class="mini exit" id="exitAdminServ">Salir de administración</button>
     </div>
+    <input type="file" id="importFileServ" accept="application/json" hidden>
   </div>
 </section>
 
@@ -549,10 +517,32 @@ footer{background:#08050a;border-top:1px solid var(--line);padding:70px 0 34px}
   </div>
 </div>
 
+<div class="modal-bg" id="modalServ">
+  <div class="modal">
+    <span class="x-close" id="closeModalServ">&times;</span>
+    <h3 id="modalServTitle">Nuevo servicio</h3>
+    <p class="sub">Completa los datos. Aparecerá automáticamente en la web.</p>
+    <input type="hidden" id="servId">
+    <div class="field"><label>Nombre del servicio</label><input id="servTitle" placeholder="Ej. Domingo Familiar"></div>
+    <div class="field"><div class="row">
+      <div><label>Día(s)</label><input id="servDay" placeholder="Ej. Domingo / Lunes y Jueves"></div>
+      <div><label>Hora</label><input id="servTime" placeholder="Ej. 10:00 AM"></div>
+    </div></div>
+    <div class="field"><div class="row">
+      <div><label>Modalidad</label><select id="servMod"><option value="presencial">Presencial (templo)</option><option value="zoom">Vía Zoom (en línea)</option></select></div>
+      <div><label>Ícono</label><select id="servIcon"><option value="templo">Templo / Casa</option><option value="oracion">Oración / Fuego</option><option value="intercesion">Intercesión</option><option value="estudio">Estudio / Libro</option></select></div>
+    </div></div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" id="saveService" style="flex:1;justify-content:center">Guardar</button>
+      <button class="btn btn-ghost" id="cancelService" style="justify-content:center">Cancelar</button>
+    </div>
+  </div>
+</div>
+
 <script>
 /* ---------- icon strings reused ---------- */
 const MONTHS=['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC'];
-const PASS='imperio2026'; // <-- cámbialo por la clave que prefieras
+const PASS='Jeivi2026'; // <-- cámbialo por la clave que prefieras
 
 /* ---------- nav behaviour ---------- */
 const nav=document.getElementById('nav');
@@ -686,6 +676,112 @@ document.getElementById('importFile').onchange=ev=>{
   const f=ev.target.files[0];if(!f)return;
   const r=new FileReader();
   r.onload=()=>{try{const d=JSON.parse(r.result);if(Array.isArray(d)){events=d;save(events);render();alert('Eventos importados.');}else alert('Archivo inválido.');}catch(e){alert('No se pudo leer el archivo.');}};
+  r.readAsText(f);
+};
+
+/* ---------- SERVICIOS (editable: misma clave y mecánica que eventos) ---------- */
+const SV_ICONS={
+  templo:'<path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v9h14v-9"/><path d="M9.5 19v-5h5v5"/>',
+  oracion:'<path d="M12 2s5 4 5 9a5 5 0 0 1-10 0c0-1.5.7-2.8 1.5-3.5C8.5 9 9 11 10 11c0-2 1-5 2-9Z"/>',
+  intercesion:'<path d="M12 3v8"/><path d="M8 7h8"/><path d="M6 21c0-4 2.7-6 6-6s6 2 6 6"/><path d="M12 11c-1.5 1.5-3 2.5-3 4"/><path d="M12 11c1.5 1.5 3 2.5 3 4"/>',
+  estudio:'<path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5Z"/><path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H13v15h5.5a1.5 1.5 0 0 1 1.5 1.5Z"/>'
+};
+const SV_CLOCK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:15px;height:15px;vertical-align:-2px"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
+const KEY_S='iidv_servicios';
+function loadS(){try{return JSON.parse(localStorage.getItem(KEY_S))||null}catch(e){return null}}
+function saveS(d){try{localStorage.setItem(KEY_S,JSON.stringify(d))}catch(e){}}
+let services=loadS();
+if(!services){
+  services=[
+    {id:'s1',title:'Domingo Familiar',day:'Domingo',time:'10:00 AM',mod:'presencial',icon:'templo'},
+    {id:'s2',title:'Oración y Liberación',day:'Miércoles',time:'6:30 PM',mod:'presencial',icon:'oracion'},
+    {id:'s3',title:'Oración de Intercesión',day:'Lunes y Jueves',time:'7:00 – 7:30 PM',mod:'zoom',icon:'intercesion'},
+    {id:'s4',title:'Ayunos',day:'Martes',time:'9:00 AM',mod:'zoom',icon:'oracion'},
+    {id:'s5',title:'Clamores',day:'Miér · Vier · Sáb',time:'9:00 – 10:00 AM',mod:'zoom',icon:'intercesion'},
+    {id:'s6',title:'Escuela de Jesús',day:'Viernes',time:'7:00 PM',mod:'zoom',icon:'estudio'}
+  ];
+  saveS(services);
+}
+const servWrap=document.getElementById('servWrap');
+function svIcon(k){return SV_ICONS[k]||SV_ICONS.templo}
+function groupHTML(label,isZoom,list){
+  if(!list.length)return '';
+  let cards='';
+  list.forEach(s=>{
+    cards+=`<div class="card${s.mod==='zoom'?' zoom':''}">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">${svIcon(s.icon)}</svg></div>
+      <span class="day">${esc(s.day)}</span>
+      <h4>${esc(s.title)}</h4>
+      <span class="time">${SV_CLOCK} ${esc(s.time)}</span>
+      <div class="ev-admin">
+        <button data-edits="${s.id}">Editar</button>
+        <button class="del" data-dels="${s.id}">Eliminar</button>
+      </div>
+    </div>`;
+  });
+  const tag=isZoom?'<span class="tag zoom">En línea</span>':'<span class="tag">En el templo</span>';
+  return `<div class="serv-group reveal in"><div class="gh"><b>${esc(label)}</b>${tag}</div><div class="cards">${cards}</div></div>`;
+}
+function renderS(){
+  saveS(services);
+  const pres=services.filter(s=>s.mod!=='zoom');
+  const zoom=services.filter(s=>s.mod==='zoom');
+  let html=groupHTML('Presencial',false,pres)+groupHTML('Vía Zoom',true,zoom);
+  servWrap.innerHTML=html||'<div class="ev-empty">Pronto anunciaremos el calendario de servicios.</div>';
+}
+renderS();
+
+const modalServ=document.getElementById('modalServ');
+function openModalS(s){
+  document.getElementById('modalServTitle').textContent=s?'Editar servicio':'Nuevo servicio';
+  document.getElementById('servId').value=s?s.id:'';
+  document.getElementById('servTitle').value=s?s.title:'';
+  document.getElementById('servDay').value=s?(s.day||''):'';
+  document.getElementById('servTime').value=s?(s.time||''):'';
+  document.getElementById('servMod').value=s?(s.mod||'presencial'):'presencial';
+  document.getElementById('servIcon').value=s?(s.icon||'templo'):'templo';
+  modalServ.classList.add('open');
+}
+function closeModalS(){modalServ.classList.remove('open')}
+document.getElementById('addService').onclick=()=>openModalS(null);
+document.getElementById('closeModalServ').onclick=closeModalS;
+document.getElementById('cancelService').onclick=closeModalS;
+modalServ.onclick=e=>{if(e.target===modalServ)closeModalS()};
+document.getElementById('exitAdminServ').onclick=()=>document.body.classList.remove('admin');
+
+document.getElementById('saveService').onclick=()=>{
+  const id=document.getElementById('servId').value;
+  const title=document.getElementById('servTitle').value.trim();
+  if(!title){alert('El nombre del servicio es obligatorio.');return;}
+  const data={
+    title,
+    day:document.getElementById('servDay').value.trim(),
+    time:document.getElementById('servTime').value.trim(),
+    mod:document.getElementById('servMod').value,
+    icon:document.getElementById('servIcon').value
+  };
+  if(id){const i=services.findIndex(s=>s.id===id);if(i>-1)services[i]={...services[i],...data};}
+  else{data.id='s'+Date.now();services.push(data);}
+  saveS(services);renderS();closeModalS();
+};
+
+servWrap.addEventListener('click',e=>{
+  const ed=e.target.getAttribute('data-edits');
+  const dl=e.target.getAttribute('data-dels');
+  if(ed){const s=services.find(x=>x.id===ed);if(s)openModalS(s);}
+  if(dl){if(confirm('¿Eliminar este servicio?')){services=services.filter(x=>x.id!==dl);saveS(services);renderS();}}
+});
+
+document.getElementById('exportServices').onclick=()=>{
+  const blob=new Blob([JSON.stringify(services,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='servicios-imperio-de-vida.json';a.click();
+};
+document.getElementById('importServices').onclick=()=>document.getElementById('importFileServ').click();
+document.getElementById('importFileServ').onchange=ev=>{
+  const f=ev.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=()=>{try{const d=JSON.parse(r.result);if(Array.isArray(d)){services=d;saveS(services);renderS();alert('Servicios importados.');}else alert('Archivo inválido.');}catch(e){alert('No se pudo leer el archivo.');}};
   r.readAsText(f);
 };
 </script>
