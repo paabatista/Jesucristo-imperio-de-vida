@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -539,10 +539,29 @@ footer{background:#08050a;border-top:1px solid var(--line);padding:70px 0 34px}
   </div>
 </div>
 
+<!-- Firebase SDK (compat) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script>
 /* ---------- icon strings reused ---------- */
 const MONTHS=['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC'];
-const PASS='Jeivi2026'; // <-- cámbialo por la clave que prefieras
+
+/* ---------- Firebase (nube) ---------- */
+const firebaseConfig = {
+  apiKey: "AIzaSyDAZ628rSoJrHuoejQ6NiuPKxwESg19yZs",
+  authDomain: "iglesia-imperio-de-vida.firebaseapp.com",
+  projectId: "iglesia-imperio-de-vida",
+  storageBucket: "iglesia-imperio-de-vida.firebasestorage.app",
+  messagingSenderId: "929348135358",
+  appId: "1:929348135358:web:318868759cb684c4b7b1ef",
+  measurementId: "G-RRTW44HNQM"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const auth = firebase.auth();
+// El modo administrador se activa SOLO cuando hay sesión iniciada (Firebase Auth)
+auth.onAuthStateChanged(u=>{ document.body.classList.toggle('admin', !!u); });
 
 /* ---------- nav behaviour ---------- */
 const nav=document.getElementById('nav');
@@ -556,29 +575,27 @@ document.getElementById('year').textContent=new Date().getFullYear();
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-/* ---------- storage helpers (safe) ---------- */
-const KEY='iidv_eventos';
-function load(){try{return JSON.parse(localStorage.getItem(KEY))||null}catch(e){return null}}
-function save(d){try{localStorage.setItem(KEY,JSON.stringify(d))}catch(e){}}
-let events=load();
-if(!events){
-  events=[
-    {id:'e1',title:'Domingo Familiar Especial',start:isoFuture(7),end:'',time:'10:00 AM',place:'Templo · El Dorado',desc:'Un domingo de celebración para toda la familia. ¡Trae a un invitado!'},
-    {id:'e2',title:'Vigilia de Avivamiento',start:isoFuture(18),end:'',time:'8:00 PM',place:'Templo / En Vivo',desc:'Una noche de adoración, palabra y poder. Transmitida también por YouTube.'}
-  ];
-  save(events);
-}
+/* ---------- almacenamiento de EVENTOS (nube Firestore) ---------- */
 function isoFuture(days){const d=new Date();d.setDate(d.getDate()+days);return d.toISOString().slice(0,10)}
+let events=[
+  {id:'e1',title:'Domingo Familiar Especial',start:isoFuture(7),end:'',time:'10:00 AM',place:'Templo · El Dorado',desc:'Un domingo de celebración para toda la familia. ¡Trae a un invitado!'},
+  {id:'e2',title:'Vigilia de Avivamiento',start:isoFuture(18),end:'',time:'8:00 PM',place:'Templo / En Vivo',desc:'Una noche de adoración, palabra y poder. Transmitida también por YouTube.'}
+];
+function save(d){ db.collection('contenido').doc('eventos').set({lista:d}).catch(e=>console.error('No se pudo guardar eventos:',e)); }
+// Escucha en tiempo real: cualquier cambio se ve al instante en todos los dispositivos
+db.collection('contenido').doc('eventos').onSnapshot(snap=>{
+  const data=snap.data();
+  if(snap.exists && data && Array.isArray(data.lista)) events=data.lista;
+  render();
+}, e=>{ console.error('Error eventos:',e); render(); });
 
 /* ---------- render events ---------- */
 const grid=document.getElementById('evGrid');
 function todayISO(){return new Date().toISOString().slice(0,10)}
 function render(){
   const t=todayISO();
-  // quitar pasados
-  events=events.filter(e=>(e.end||e.start)>=t);
-  save(events);
-  const sorted=[...events].sort((a,b)=>a.start.localeCompare(b.start));
+  // se muestran solo los vigentes; los pasados se ocultan (no se borran de la nube)
+  const sorted=[...events].filter(e=>(e.end||e.start)>=t).sort((a,b)=>a.start.localeCompare(b.start));
   grid.innerHTML='';
   if(!sorted.length){
     grid.innerHTML='<div class="ev-empty">Pronto anunciaremos nuevos eventos. ¡Mantente atento!</div>';
@@ -611,16 +628,19 @@ function fmt(iso){const d=new Date(iso+'T00:00:00');return d.getDate()+' '+MONTH
 function esc(s){return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
 render();
 
-/* ---------- admin mode ---------- */
+/* ---------- admin mode (Firebase Auth) ---------- */
 function enterAdmin(){
   if(document.body.classList.contains('admin'))return;
-  const p=prompt('Clave de administración:');
-  if(p===null)return;
-  if(p===PASS){document.body.classList.add('admin');document.getElementById('eventos').scrollIntoView({behavior:'smooth'});}
-  else alert('Clave incorrecta.');
+  const email=prompt('Correo de administrador:');
+  if(!email)return;
+  const pass=prompt('Contraseña:');
+  if(pass===null)return;
+  auth.signInWithEmailAndPassword(email.trim(),pass)
+    .then(()=>{document.getElementById('eventos').scrollIntoView({behavior:'smooth'});})
+    .catch(()=>alert('Correo o contraseña incorrectos.'));
 }
 document.getElementById('adminLink').onclick=enterAdmin;
-document.getElementById('exitAdmin').onclick=()=>document.body.classList.remove('admin');
+document.getElementById('exitAdmin').onclick=()=>auth.signOut();
 
 /* ---------- modal ---------- */
 const modal=document.getElementById('modal');
@@ -687,21 +707,20 @@ const SV_ICONS={
   estudio:'<path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5Z"/><path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H13v15h5.5a1.5 1.5 0 0 1 1.5 1.5Z"/>'
 };
 const SV_CLOCK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:15px;height:15px;vertical-align:-2px"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
-const KEY_S='iidv_servicios';
-function loadS(){try{return JSON.parse(localStorage.getItem(KEY_S))||null}catch(e){return null}}
-function saveS(d){try{localStorage.setItem(KEY_S,JSON.stringify(d))}catch(e){}}
-let services=loadS();
-if(!services){
-  services=[
-    {id:'s1',title:'Domingo Familiar',day:'Domingo',time:'10:00 AM',mod:'presencial',icon:'templo'},
-    {id:'s2',title:'Oración y Liberación',day:'Miércoles',time:'6:30 PM',mod:'presencial',icon:'oracion'},
-    {id:'s3',title:'Oración de Intercesión',day:'Lunes y Jueves',time:'7:00 – 7:30 PM',mod:'zoom',icon:'intercesion'},
-    {id:'s4',title:'Ayunos',day:'Martes',time:'9:00 AM',mod:'zoom',icon:'oracion'},
-    {id:'s5',title:'Clamores',day:'Miér · Vier · Sáb',time:'9:00 – 10:00 AM',mod:'zoom',icon:'intercesion'},
-    {id:'s6',title:'Escuela de Jesús',day:'Viernes',time:'7:00 PM',mod:'zoom',icon:'estudio'}
-  ];
-  saveS(services);
-}
+let services=[
+  {id:'s1',title:'Domingo Familiar',day:'Domingo',time:'10:00 AM',mod:'presencial',icon:'templo'},
+  {id:'s2',title:'Oración y Liberación',day:'Miércoles',time:'6:30 PM',mod:'presencial',icon:'oracion'},
+  {id:'s3',title:'Oración de Intercesión',day:'Lunes y Jueves',time:'7:00 – 7:30 PM',mod:'zoom',icon:'intercesion'},
+  {id:'s4',title:'Ayunos',day:'Martes',time:'9:00 AM',mod:'zoom',icon:'oracion'},
+  {id:'s5',title:'Clamores',day:'Miér · Vier · Sáb',time:'9:00 – 10:00 AM',mod:'zoom',icon:'intercesion'},
+  {id:'s6',title:'Escuela de Jesús',day:'Viernes',time:'7:00 PM',mod:'zoom',icon:'estudio'}
+];
+function saveS(d){ db.collection('contenido').doc('servicios').set({lista:d}).catch(e=>console.error('No se pudo guardar servicios:',e)); }
+db.collection('contenido').doc('servicios').onSnapshot(snap=>{
+  const data=snap.data();
+  if(snap.exists && data && Array.isArray(data.lista)) services=data.lista;
+  renderS();
+}, e=>{ console.error('Error servicios:',e); renderS(); });
 const servWrap=document.getElementById('servWrap');
 function svIcon(k){return SV_ICONS[k]||SV_ICONS.templo}
 function groupHTML(label,isZoom,list){
@@ -723,7 +742,6 @@ function groupHTML(label,isZoom,list){
   return `<div class="serv-group reveal in"><div class="gh"><b>${esc(label)}</b>${tag}</div><div class="cards">${cards}</div></div>`;
 }
 function renderS(){
-  saveS(services);
   const pres=services.filter(s=>s.mod!=='zoom');
   const zoom=services.filter(s=>s.mod==='zoom');
   let html=groupHTML('Presencial',false,pres)+groupHTML('Vía Zoom',true,zoom);
@@ -747,7 +765,7 @@ document.getElementById('addService').onclick=()=>openModalS(null);
 document.getElementById('closeModalServ').onclick=closeModalS;
 document.getElementById('cancelService').onclick=closeModalS;
 modalServ.onclick=e=>{if(e.target===modalServ)closeModalS()};
-document.getElementById('exitAdminServ').onclick=()=>document.body.classList.remove('admin');
+document.getElementById('exitAdminServ').onclick=()=>auth.signOut();
 
 document.getElementById('saveService').onclick=()=>{
   const id=document.getElementById('servId').value;
