@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jesucristo Imperio de Vida</title>
+<meta name="description" content="Ministerio Jesucristo Imperio de Vida — Pastores Benito y Carmen Cañate. El Dorado, La Galería.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0c0608;
+  --bg2:#150a0d;
+  --panel:#1a0e12;
+  --panel2:#22141a;
+  --red:#9b1b22;
+  --red-bright:#c8202a;
+  --red-soft:#e0545c;
+  --gold:#d8b270;
+  --gold-bright:#f0d49a;
+  --gold-deep:#a9844a;
+  --cream:#f6efe4;
+  --muted:#c4a9ad;
+  --line:rgba(216,178,112,.22);
+  --display:'Cormorant Garamond',serif;
+  --body:'Jost',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--cream);
+  font-family:var(--body);
+  font-weight:300;
+  line-height:1.65;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+section{position:relative}
+
+/* ---------- decorative grain ---------- */
+body::after{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- ornamental divider ---------- */
+.ornament{display:flex;align-items:center;justify-content:center;gap:16px;margin:0 auto}
+.ornament .line{height:1px;width:64px;background:linear-gradient(90deg,transparent,var(--gold))}
+.ornament .line.r{background:linear-gradient(90deg,var(--gold),transparent)}
+.ornament .dot{width:6px;height:6px;border:1px solid var(--gold);transform:rotate(45deg)}
+.kicker{font-family:var(--body);font-weight:500;letter-spacing:.42em;text-transform:uppercase;font-size:.72rem;color:var(--gold);text-indent:.42em}
+
+h2.title{font-family:var(--display);font-weight:600;font-size:clamp(2.2rem,5vw,3.6rem);line-height:1.05;letter-spacing:.01em;text-align:center;color:var(--cream)}
+h2.title em{font-style:italic;color:var(--gold-bright)}
+
+/* ================= NAV ================= */
+header.nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 28px;transition:.4s ease;
+  background:transparent;
+}
+header.nav.scrolled{
+  background:rgba(12,6,8,.82);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);padding:9px 28px;
+}
+.nav .brand{display:flex;align-items:center;gap:12px}
+.nav .brand img{height:42px;width:auto;transition:.4s}
+header.nav.scrolled .brand img{height:34px}
+.nav .brand b{font-family:var(--display);font-weight:600;font-size:1.05rem;letter-spacing:.04em;color:var(--cream);line-height:1}
+.nav .brand span{display:block;font-size:.58rem;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-top:3px}
+.nav menu{display:flex;align-items:center;gap:30px;list-style:none}
+.nav menu a{font-size:.82rem;letter-spacing:.08em;color:var(--muted);transition:.25s;position:relative}
+.nav menu a:hover{color:var(--gold-bright)}
+.nav menu a::after{content:"";position:absolute;left:0;bottom:-6px;height:1px;width:0;background:var(--gold);transition:.3s}
+.nav menu a:hover::after{width:100%}
+.btn-live{
+  display:inline-flex;align-items:center;gap:8px;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+  font-weight:500;padding:9px 18px;border:1px solid var(--red-soft);color:var(--cream);border-radius:2px;
+  background:linear-gradient(180deg,var(--red),var(--red-bright));transition:.3s;
+}
+.btn-live:hover{box-shadow:0 0 22px rgba(200,32,42,.55);transform:translateY(-1px)}
+.live-dot{width:8px;height:8px;border-radius:50%;background:#fff;box-shadow:0 0 0 0 rgba(255,255,255,.7);animation:pulse 1.8s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,255,255,.6)}70%{box-shadow:0 0 0 7px rgba(255,255,255,0)}100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}}
+.burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px}
+.burger span{width:24px;height:2px;background:var(--gold);transition:.3s}
+
+/* ================= HERO ================= */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+  padding:120px 24px 70px;position:relative;overflow:hidden;
+  background:
+    radial-gradient(120% 90% at 50% 0%,rgba(155,27,34,.42) 0%,rgba(12,6,8,0) 55%),
+    radial-gradient(80% 60% at 50% 110%,rgba(155,27,34,.30) 0%,rgba(12,6,8,0) 60%),
+    linear-gradient(180deg,#0c0608,#150a0d 60%,#0c0608);
+}
+.rays{position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background:
+   conic-gradient(from 200deg at 50% -10%,transparent 0deg,rgba(216,178,112,.10) 12deg,transparent 24deg,transparent 60deg,rgba(216,178,112,.07) 72deg,transparent 84deg);
+  mix-blend-mode:screen;
+}
+.hero .vignette{position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 220px 60px rgba(0,0,0,.7)}
+.hero-logo{width:min(560px,86vw);height:auto;filter:drop-shadow(0 8px 40px rgba(0,0,0,.7));position:relative}
+.hero-sub{margin-top:6px}
+.hero-tag{font-family:var(--display);font-style:italic;font-size:clamp(1.3rem,3.4vw,2rem);color:var(--gold-bright);font-weight:500;letter-spacing:.02em}
+.hero-verse{max-width:560px;margin:20px auto 0;color:var(--muted);font-size:1rem;font-weight:300}
+.hero-cta{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:36px}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:13px 26px;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;font-weight:500;border-radius:2px;transition:.3s;cursor:pointer;border:1px solid transparent}
+.btn-primary{background:linear-gradient(180deg,var(--red),var(--red-bright));color:#fff;border-color:var(--red-soft)}
+.btn-primary:hover{box-shadow:0 0 26px rgba(200,32,42,.5);transform:translateY(-2px)}
+.btn-ghost{border:1px solid var(--gold-deep);color:var(--gold-bright);background:rgba(216,178,112,.04)}
+.btn-ghost:hover{background:rgba(216,178,112,.12);border-color:var(--gold)}
+.hero-social{display:flex;gap:18px;justify-content:center;margin-top:42px}
+.hero-social a{width:44px;height:44px;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;color:var(--muted);transition:.3s}
+.hero-social a:hover{color:var(--gold-bright);border-color:var(--gold);transform:translateY(-3px)}
+.hero-social svg{width:19px;height:19px}
+.scroll-hint{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);color:var(--gold);opacity:.6;font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:8px}
+.scroll-hint::after{content:"";width:1px;height:34px;background:linear-gradient(var(--gold),transparent);animation:drop 2s infinite}
+@keyframes drop{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ================= PASTORES ================= */
+.pastores{padding:110px 0;background:linear-gradient(180deg,#0c0608,#120709)}
+.pastores .grid{display:grid;grid-template-columns:0.85fr 1fr;gap:60px;align-items:center;margin-top:30px}
+.frame{position:relative;padding:14px}
+.frame::before{content:"";position:absolute;inset:0;border:1px solid var(--gold-deep);}
+.frame::after{content:"";position:absolute;inset:8px;border:1px solid var(--line);pointer-events:none;z-index:3}
+.frame img{position:relative;z-index:2;width:100%;filter:saturate(1.02)}
+.frame .corner{position:absolute;width:22px;height:22px;border:2px solid var(--gold);z-index:4}
+.frame .c1{top:-2px;left:-2px;border-right:none;border-bottom:none}
+.frame .c2{top:-2px;right:-2px;border-left:none;border-bottom:none}
+.frame .c3{bottom:-2px;left:-2px;border-right:none;border-top:none}
+.frame .c4{bottom:-2px;right:-2px;border-left:none;border-top:none}
+.pastores h3{font-family:var(--display);font-size:clamp(2rem,4vw,3rem);font-weight:600;line-height:1.08;color:var(--cream);margin:14px 0 6px}
+.pastores h3 em{font-style:italic;color:var(--gold-bright)}
+.pastores .role{color:var(--gold);letter-spacing:.28em;text-transform:uppercase;font-size:.72rem;font-weight:500}
+.pastores p{color:var(--muted);margin-top:18px;font-size:1.02rem}
+.pastores .quote{margin-top:24px;padding-left:20px;border-left:2px solid var(--red);font-family:var(--display);font-style:italic;font-size:1.3rem;color:var(--cream)}
+
+/* ================= SERVICIOS ================= */
+.servicios{padding:110px 0;background:radial-gradient(90% 70% at 50% 0%,rgba(155,27,34,.16),transparent 60%),#0c0608}
+.serv-head{text-align:center;margin-bottom:14px}
+.serv-group{margin-top:54px}
+.serv-group .gh{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:30px}
+.serv-group .gh b{font-family:var(--display);font-size:1.5rem;font-weight:600;letter-spacing:.04em}
+.serv-group .gh .tag{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--bg);background:var(--gold);padding:4px 10px;border-radius:2px;font-weight:600}
+.serv-group .gh .tag.zoom{background:var(--red-bright);color:#fff}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.card{
+  position:relative;padding:28px 26px;border:1px solid var(--line);border-radius:3px;
+  background:linear-gradient(160deg,rgba(34,20,26,.7),rgba(20,11,14,.5));
+  transition:.35s;overflow:hidden;
+}
+.card::before{content:"";position:absolute;left:0;top:0;height:100%;width:3px;background:linear-gradient(var(--gold),var(--gold-deep));transform:scaleY(0);transform-origin:top;transition:.35s}
+.card:hover{transform:translateY(-5px);border-color:var(--gold-deep);box-shadow:0 18px 40px rgba(0,0,0,.45)}
+.card:hover::before{transform:scaleY(1)}
+.card .ic{color:var(--gold);margin-bottom:14px}
+.card .ic svg{width:26px;height:26px}
+.card .day{font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--red-soft);font-weight:500}
+.card h4{font-family:var(--display);font-size:1.5rem;font-weight:600;color:var(--cream);margin:6px 0 10px;line-height:1.1}
+.card .time{display:inline-flex;align-items:center;gap:7px;color:var(--gold-bright);font-size:.95rem;font-weight:400}
+.card.zoom .time{color:var(--red-soft)}
+
+/* ================= EVENTOS ================= */
+.eventos{padding:110px 0;background:linear-gradient(180deg,#0c0608,#160a0d)}
+.ev-intro{text-align:center;max-width:620px;margin:18px auto 0;color:var(--muted)}
+.ev-bar{display:flex;justify-content:center;gap:12px;margin:34px 0 10px;flex-wrap:wrap}
+.ev-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:22px;margin-top:36px}
+.ev-card{
+  position:relative;border:1px solid var(--line);border-radius:4px;overflow:hidden;
+  background:linear-gradient(160deg,rgba(34,20,26,.75),rgba(18,10,13,.6));transition:.35s;
+}
+.ev-card:hover{transform:translateY(-4px);border-color:var(--gold-deep);box-shadow:0 18px 44px rgba(0,0,0,.5)}
+.ev-top{display:flex;gap:16px;padding:22px 22px 0}
+.ev-date{flex-shrink:0;text-align:center;border:1px solid var(--gold-deep);border-radius:3px;padding:8px 12px;background:rgba(216,178,112,.06);min-width:62px}
+.ev-date .d{font-family:var(--display);font-size:1.7rem;font-weight:700;color:var(--gold-bright);line-height:1}
+.ev-date .m{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:3px}
+.ev-card h4{font-family:var(--display);font-size:1.42rem;font-weight:600;color:var(--cream);line-height:1.12}
+.ev-card .meta{font-size:.78rem;color:var(--gold);margin-top:6px;letter-spacing:.04em}
+.ev-card .body{padding:14px 22px 22px;color:var(--muted);font-size:.93rem}
+.badge-live{position:absolute;top:14px;right:14px;font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:#fff;background:var(--red-bright);padding:4px 9px;border-radius:2px;display:inline-flex;align-items:center;gap:6px;box-shadow:0 0 16px rgba(200,32,42,.5)}
+.badge-live .live-dot{width:6px;height:6px}
+.ev-admin{display:none;gap:8px;padding:0 22px 20px}
+.ev-admin button{font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;padding:7px 12px;border-radius:2px;cursor:pointer;border:1px solid var(--line);background:transparent;color:var(--muted);transition:.25s}
+.ev-admin button:hover{color:var(--cream);border-color:var(--gold-deep)}
+.ev-admin button.del:hover{color:#fff;border-color:var(--red-bright);background:rgba(200,32,42,.18)}
+body.admin .ev-admin{display:flex}
+.ev-empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:50px 20px;border:1px dashed var(--line);border-radius:6px;font-family:var(--display);font-size:1.4rem;font-style:italic}
+
+.admin-tools{display:none;justify-content:center;gap:10px;margin-top:30px;flex-wrap:wrap}
+body.admin .admin-tools{display:flex}
+.mini{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;padding:9px 16px;border-radius:2px;cursor:pointer;border:1px solid var(--gold-deep);background:rgba(216,178,112,.05);color:var(--gold-bright);transition:.25s;font-weight:500}
+.mini:hover{background:rgba(216,178,112,.14)}
+.mini.exit{border-color:var(--line);color:var(--muted)}
+
+/* modal */
+.modal-bg{position:fixed;inset:0;background:rgba(5,2,3,.8);backdrop-filter:blur(6px);z-index:2000;display:none;align-items:center;justify-content:center;padding:24px}
+.modal-bg.open{display:flex}
+.modal{width:min(520px,100%);background:linear-gradient(180deg,#1c1014,#120a0d);border:1px solid var(--gold-deep);border-radius:6px;padding:34px;position:relative;max-height:92vh;overflow:auto}
+.modal h3{font-family:var(--display);font-size:1.8rem;color:var(--gold-bright);margin-bottom:6px;font-weight:600}
+.modal p.sub{color:var(--muted);font-size:.85rem;margin-bottom:22px}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:7px}
+.field input,.field textarea{width:100%;padding:11px 13px;background:rgba(0,0,0,.35);border:1px solid var(--line);border-radius:3px;color:var(--cream);font-family:var(--body);font-size:.92rem;transition:.25s}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--gold)}
+.field textarea{resize:vertical;min-height:78px}.field select{width:100%;padding:11px 13px;background:rgba(0,0,0,.35);border:1px solid var(--line);border-radius:3px;color:var(--cream);font-family:var(--body);font-size:.92rem;transition:.25s;cursor:pointer}.field select:focus{outline:none;border-color:var(--gold)}
+.field .row{display:flex;gap:12px}
+.field .row>div{flex:1}
+.modal-actions{display:flex;gap:12px;margin-top:24px}
+.x-close{position:absolute;top:16px;right:18px;cursor:pointer;color:var(--muted);font-size:1.4rem;line-height:1;transition:.2s}
+.x-close:hover{color:var(--gold-bright)}
+
+/* ================= FUNDACION ================= */
+.fundacion{padding:110px 0;background:linear-gradient(180deg,#160a0d,#0c0608);position:relative;overflow:hidden}
+.fundacion::before{content:"";position:absolute;inset:0;background:radial-gradient(70% 60% at 80% 30%,rgba(216,178,112,.10),transparent 60%);pointer-events:none}
+.fund-panel{
+  position:relative;margin-top:40px;display:grid;grid-template-columns:auto 1fr;gap:54px;align-items:center;
+  padding:54px;border:1px solid var(--line);border-radius:8px;
+  background:linear-gradient(150deg,rgba(34,20,26,.6),rgba(16,9,12,.55));
+}
+.fund-medal{position:relative;width:240px;flex-shrink:0;margin:0 auto}
+.fund-medal img{width:100%;filter:drop-shadow(0 10px 36px rgba(0,0,0,.6))}
+.fund-medal::after{content:"";position:absolute;inset:-14px;border:1px solid var(--gold-deep);border-radius:50%;opacity:.5;animation:spin 26s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.fund-name{font-family:var(--display);font-style:italic;color:var(--gold);font-size:1.05rem;letter-spacing:.04em}
+.fundacion h3{font-family:var(--display);font-size:clamp(1.9rem,4vw,2.8rem);font-weight:600;line-height:1.08;color:var(--cream);margin:6px 0 4px}
+.fundacion h3 em{font-style:italic;color:var(--gold-bright)}
+.fund-tag{display:inline-block;font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;color:var(--bg);background:var(--gold);padding:5px 12px;border-radius:2px;font-weight:600;margin-bottom:18px}
+.fundacion p.lead{color:var(--muted);font-size:1.04rem;max-width:560px}
+.fund-invite{margin-top:26px;padding:22px 24px;border-left:3px solid var(--red);background:rgba(155,27,34,.08);border-radius:0 4px 4px 0}
+.fund-invite b{font-family:var(--display);font-size:1.3rem;color:var(--gold-bright);font-weight:600;display:block;margin-bottom:6px}
+.fund-invite span{color:var(--muted);font-size:.95rem}
+.fund-cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:26px}
+.btn-wa{display:inline-flex;align-items:center;gap:10px;padding:13px 24px;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;font-weight:500;border-radius:2px;background:linear-gradient(180deg,#1f9d57,#13864a);color:#fff;border:1px solid #2fae67;transition:.3s}
+.btn-wa:hover{box-shadow:0 0 24px rgba(31,157,87,.45);transform:translateY(-2px)}
+.btn-wa svg{width:19px;height:19px}
+.btn-fund-ig{display:inline-flex;align-items:center;gap:10px;padding:13px 24px;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;font-weight:500;border-radius:2px;border:1px solid var(--gold-deep);color:var(--gold-bright);background:rgba(216,178,112,.05);transition:.3s}
+.btn-fund-ig:hover{background:rgba(216,178,112,.13);border-color:var(--gold)}
+.btn-fund-ig svg{width:18px;height:18px}
+@media(max-width:860px){
+  .fund-panel{grid-template-columns:1fr;gap:30px;padding:34px 24px;text-align:center}
+  .fund-medal{width:190px}
+  .fund-invite{text-align:left}
+  .fund-cta{justify-content:center}
+  .fundacion p.lead{margin:0 auto}
+}
+
+/* ================= VIDEOS ================= */
+.videos{padding:110px 0 120px;background:radial-gradient(80% 70% at 50% 100%,rgba(155,27,34,.18),transparent 60%),#0c0608}
+.vid-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:46px}
+.vid{
+  position:relative;display:flex;flex-direction:column;justify-content:flex-end;
+  min-height:240px;padding:34px;border:1px solid var(--line);border-radius:5px;overflow:hidden;transition:.4s;
+  background:linear-gradient(160deg,rgba(34,20,26,.7),rgba(16,9,12,.6));
+}
+.vid::before{content:"";position:absolute;inset:0;opacity:.14;transition:.4s;background:radial-gradient(circle at 70% 20%,currentColor,transparent 60%)}
+.vid.yt{color:var(--red-bright)}
+.vid.ig{color:#d6336c}
+.vid:hover{transform:translateY(-6px);border-color:currentColor;box-shadow:0 22px 50px rgba(0,0,0,.5)}
+.vid:hover::before{opacity:.26}
+.vid .pic{position:absolute;top:30px;left:34px;color:currentColor}
+.vid .pic svg{width:40px;height:40px}
+.vid b{font-family:var(--display);font-size:1.9rem;font-weight:600;color:var(--cream);position:relative}
+.vid span{color:var(--muted);font-size:.9rem;position:relative;margin-top:4px}
+.vid .go{position:relative;margin-top:18px;color:var(--gold-bright);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;display:inline-flex;align-items:center;gap:8px}
+
+/* ================= FOOTER ================= */
+footer{background:#08050a;border-top:1px solid var(--line);padding:70px 0 34px}
+.foot-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:40px}
+.foot-brand img{height:80px;width:auto;margin-bottom:16px}
+.foot-brand p{color:var(--muted);font-size:.9rem;max-width:300px}
+.foot-col h5{font-family:var(--display);font-size:1.25rem;color:var(--gold-bright);margin-bottom:16px;font-weight:600}
+.foot-col a,.foot-col p{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:.9rem;margin-bottom:11px;transition:.25s}
+.foot-col a:hover{color:var(--gold-bright)}
+.foot-col svg{width:17px;height:17px;color:var(--gold);flex-shrink:0}
+.foot-social{display:flex;gap:14px;margin-top:6px}
+.foot-social a{width:40px;height:40px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;color:var(--muted);transition:.3s}
+.foot-social a:hover{color:var(--gold-bright);border-color:var(--gold);transform:translateY(-3px)}
+.foot-social svg{width:17px;height:17px}
+.copy{text-align:center;margin-top:54px;padding-top:24px;border-top:1px solid var(--line);color:var(--muted);font-size:.78rem;letter-spacing:.04em}
+.copy .adm{cursor:pointer;color:var(--gold-deep);transition:.2s}
+.copy .adm:hover{color:var(--gold-bright)}
+
+/* ---------- reveal animation ---------- */
+.reveal{opacity:0;transform:translateY(34px);transition:.9s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.hero-logo,.hero-tag,.hero-verse,.hero-cta,.hero-social{opacity:0;animation:rise .95s cubic-bezier(.2,.7,.2,1) forwards}
+.hero-tag{animation-delay:.25s}.hero-verse{animation-delay:.45s}.hero-cta{animation-delay:.6s}.hero-social{animation-delay:.78s}
+@keyframes rise{to{opacity:1;transform:none}from{opacity:0;transform:translateY(26px)}}
+
+@media(max-width:860px){
+  .nav menu{position:fixed;inset:0 0 0 auto;width:min(300px,82vw);flex-direction:column;justify-content:center;gap:26px;background:rgba(12,6,8,.97);backdrop-filter:blur(12px);border-left:1px solid var(--line);transform:translateX(100%);transition:.4s;padding:40px}
+  .nav menu.open{transform:none}
+  .nav .btn-live{display:none}
+  .burger{display:flex}
+  .pastores .grid{grid-template-columns:1fr;gap:40px}
+  .foot-grid{grid-template-columns:1fr;gap:34px}
+  .vid-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="nav" id="nav">
+  <a href="#inicio" class="brand">
+    <img class="auto-logo" src="img/logo.png" alt="Logo Jesucristo Imperio de Vida">
+    <div><b>Imperio de Vida</b><span>Jesucristo</span></div>
+  </a>
+  <menu id="menu">
+    <li><a href="#pastores">Pastores</a></li>
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#eventos">Eventos</a></li>
+    <li><a href="#fundacion">Fundación</a></li>
+    <li><a href="#videos">Videos</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </menu>
+  <a class="btn-live" href="https://www.youtube.com/@pastoracarmencanate" target="_blank" rel="noopener">
+    <span class="live-dot"></span> En Vivo
+  </a>
+  <div class="burger" id="burger"><span></span><span></span><span></span></div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="inicio">
+  <div class="rays"></div>
+  <div class="vignette"></div>
+  <img class="hero-logo auto-logo" src="img/logo.png" alt="Jesucristo Imperio de Vida">
+  <div class="hero-sub">
+    <p class="hero-tag">Un lugar increíble para encontrarte con Dios</p>
+  </div>
+  <p class="hero-verse">«Donde están dos o tres congregados en mi nombre, allí estoy yo en medio de ellos.» — Mateo 18:20</p>
+  <div class="hero-cta">
+    <a class="btn btn-primary" href="https://www.youtube.com/@pastoracarmencanate" target="_blank" rel="noopener"><span class="live-dot"></span> Ver En Vivo</a>
+    <a class="btn btn-ghost" href="https://maps.app.goo.gl/pEcGfGguG2gMFt4D7" target="_blank" rel="noopener">Cómo llegar</a>
+  </div>
+  <div class="hero-social">
+    <a href="https://www.instagram.com/jesucristoimperiodevida/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg></a>
+    <a href="https://www.facebook.com/MinisterioJesucristoImperiodeVida/?locale=es_LA" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.9h2.54V9.85c0-2.52 1.5-3.91 3.78-3.91 1.1 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.78-1.63 1.57v1.89h2.78l-.44 2.9h-2.34V22c4.78-.79 8.43-4.94 8.43-9.94Z"/></svg></a>
+    <a href="https://www.youtube.com/@pastoracarmencanate" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7.5a3 3 0 0 0-2.1-2.12C19.05 4.9 12 4.9 12 4.9s-7.05 0-8.9.48A3 3 0 0 0 1 7.5C.5 9.36.5 12 .5 12s0 2.64.5 4.5a3 3 0 0 0 2.1 2.12C4.95 19.1 12 19.1 12 19.1s7.05 0 8.9-.48A3 3 0 0 0 23 16.5c.5-1.86.5-4.5.5-4.5s0-2.64-.5-4.5ZM9.75 15.25v-6.5L15.5 12l-5.75 3.25Z"/></svg></a>
+    <a href="https://maps.app.goo.gl/pEcGfGguG2gMFt4D7" target="_blank" rel="noopener" aria-label="Ubicación"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 10c0 5.5-8 12-8 12s-8-6.5-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></a>
+  </div>
+  <div class="scroll-hint">Desliza</div>
+</section>
+
+<!-- ============ PASTORES ============ -->
+<section class="pastores" id="pastores">
+  <div class="wrap">
+    <div class="ornament reveal"><span class="line"></span><span class="dot"></span><span class="kicker">Nuestros Pastores</span><span class="dot"></span><span class="line r"></span></div>
+    <div class="grid">
+      <div class="frame reveal">
+        <span class="corner c1"></span><span class="corner c2"></span><span class="corner c3"></span><span class="corner c4"></span>
+        <img src="img/foto1.jpg" alt="Pastores Benito y Carmen Cañate">
+      </div>
+      <div class="reveal">
+        <span class="role">Pastores Fundadores</span>
+        <h3>Benito <em>&amp;</em> Carmen <em>Cañate</em></h3>
+        <p>Con un corazón entregado al servicio de Dios, los pastores Benito y Carmen Cañate guían a nuestra congregación con amor, fe y la palabra viva. Su llamado es ver vidas restauradas, familias unidas y un pueblo apasionado por la presencia del Señor.</p>
+        <p>Cada semana, de forma presencial y a través de nuestras salas en línea, abren las puertas para que todos tengan un encuentro real con Jesucristo.</p>
+        <blockquote class="quote">«Imperio de Vida es más que una iglesia: es una familia donde Dios transforma corazones.»</blockquote>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICIOS ============ -->
+<section class="servicios" id="servicios">
+  <div class="wrap">
+    <div class="serv-head">
+      <div class="ornament reveal"><span class="line"></span><span class="dot"></span><span class="kicker">Calendario</span><span class="dot"></span><span class="line r"></span></div>
+      <h2 class="title reveal" style="margin-top:16px">Nuestros <em>Servicios</em></h2>
+    </div>
+
+    <div id="servWrap"></div>
+
+    <div class="admin-tools">
+      <button class="mini" id="addService">+ Nuevo servicio</button>
+      <button class="mini" id="exportServices">Exportar respaldo</button>
+      <button class="mini" id="importServices">Importar respaldo</button>
+      <button class="mini exit" id="exitAdminServ">Salir de administración</button>
+    </div>
+    <input type="file" id="importFileServ" accept="application/json" hidden>
+  </div>
+</section>
+
+<!-- ============ EVENTOS ============ -->
+<section class="eventos" id="eventos">
+  <div class="wrap">
+    <div class="ornament reveal"><span class="line"></span><span class="dot"></span><span class="kicker">Agenda</span><span class="dot"></span><span class="line r"></span></div>
+    <h2 class="title reveal" style="margin-top:16px">Eventos <em>en curso y próximos</em></h2>
+    <p class="ev-intro reveal">Mantente al día con todo lo que Dios está haciendo en nuestra casa. Los eventos pasados desaparecen automáticamente.</p>
+
+    <div id="evGrid" class="ev-grid"></div>
+
+    <div class="admin-tools">
+      <button class="mini" id="addEvent">+ Nuevo evento</button>
+      <button class="mini" id="exportEvents">Exportar respaldo</button>
+      <button class="mini" id="importEvents">Importar respaldo</button>
+      <button class="mini exit" id="exitAdmin">Salir de administración</button>
+    </div>
+    <input type="file" id="importFile" accept="application/json" hidden>
+  </div>
+</section>
+
+<!-- ============ FUNDACION ============ -->
+<section class="fundacion" id="fundacion">
+  <div class="wrap">
+    <div class="ornament reveal"><span class="line"></span><span class="dot"></span><span class="kicker">Nuestra Causa</span><span class="dot"></span><span class="line r"></span></div>
+    <div class="fund-panel reveal">
+      <div class="fund-medal">
+        <img src="img/fundacion.png" alt="Logo Fundación Soplo de Esperanza y Vida — FUNDASEV">
+      </div>
+      <div>
+        <span class="fund-name">Fundación Soplo de Esperanza y Vida</span>
+        <h3>Sembramos <em>futuro</em> a través de la <em>educación</em></h3>
+        <span class="fund-tag">FUNDASEVI · Becas Universitarias</span>
+        <p class="lead">A través de nuestra fundación, jóvenes con sueños y vocación reciben el respaldo de una <strong style="color:var(--cream);font-weight:500">beca universitaria</strong> que les abre las puertas a una carrera profesional. Cada estudiante apoyado es una vida, una familia y una comunidad transformada.</p>
+        <div class="fund-invite">
+          <b>¿Te gustaría ser un inversionista?</b>
+          <span>Puedes apadrinar la educación de un estudiante y ser parte de su historia. Escríbele directamente a la pastora Carmen para conocer cómo participar — sin compromiso.</span>
+        </div>
+        <div class="fund-cta">
+          <a class="btn-wa" href="https://wa.me/50765806101?text=Hola%20Pastora%20Carmen%2C%20vi%20la%20p%C3%A1gina%20de%20Jesucristo%20Imperio%20de%20Vida%20y%20me%20gustar%C3%ADa%20conocer%20c%C3%B3mo%20puedo%20ser%20inversionista%20de%20la%20Fundaci%C3%B3n%20Soplo%20de%20Esperanza%20y%20Vida%20%28FUNDASEVI%29." target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M.06 24l1.7-6.16A11.9 11.9 0 0 1 .16 11.9C.16 5.34 5.5 0 12.06 0a11.8 11.8 0 0 1 8.4 3.49 11.8 11.8 0 0 1 3.48 8.41c0 6.56-5.34 11.9-11.9 11.9a11.9 11.9 0 0 1-5.68-1.45L.06 24Zm6.6-3.8c1.68.99 3.28 1.59 5.4 1.59 5.45 0 9.89-4.43 9.89-9.88 0-5.46-4.43-9.89-9.89-9.89S2.18 6.45 2.18 11.9c0 2.22.65 3.88 1.74 5.62l-1 3.66 3.74-.98Zm11.36-5.29c-.07-.12-.27-.2-.56-.34-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.25-.46-2.39-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51l-.57-.01c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.22 3.08.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.41.25-.69.25-1.29.18-1.41Z"/></svg>
+            Quiero ser inversionista
+          </a>
+          <a class="btn-fund-ig" href="https://www.instagram.com/fundacionsoplodeesperanzayvida/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg>
+            Seguir a FUNDASEVI
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VIDEOS ============ -->
+<section class="videos" id="videos">
+  <div class="wrap">
+    <div class="ornament reveal"><span class="line"></span><span class="dot"></span><span class="kicker">Prédicas &amp; Reels</span><span class="dot"></span><span class="line r"></span></div>
+    <h2 class="title reveal" style="margin-top:16px">Mira nuestros <em>Videos</em></h2>
+    <div class="vid-grid">
+      <a class="vid yt reveal" href="https://www.youtube.com/@pastoracarmencanate" target="_blank" rel="noopener">
+        <div class="pic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7.5a3 3 0 0 0-2.1-2.12C19.05 4.9 12 4.9 12 4.9s-7.05 0-8.9.48A3 3 0 0 0 1 7.5C.5 9.36.5 12 .5 12s0 2.64.5 4.5a3 3 0 0 0 2.1 2.12C4.95 19.1 12 19.1 12 19.1s7.05 0 8.9-.48A3 3 0 0 0 23 16.5c.5-1.86.5-4.5.5-4.5s0-2.64-.5-4.5ZM9.75 15.25v-6.5L15.5 12l-5.75 3.25Z"/></svg></div>
+        <b>YouTube</b>
+        <span>Prédicas completas, servicios y transmisiones En Vivo.</span>
+        <span class="go">Ir al canal <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <a class="vid ig reveal" href="https://www.instagram.com/jesucristoimperiodevida/" target="_blank" rel="noopener">
+        <div class="pic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg></div>
+        <b>Instagram</b>
+        <span>Reels, palabras de fe y momentos de la congregación.</span>
+        <span class="go">Ver perfil <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer id="contacto">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand reveal">
+        <img class="auto-logo" src="img/logo.png" alt="Jesucristo Imperio de Vida">
+        <p>Una familia donde Dios transforma corazones. Te esperamos para vivir Su presencia, presencial o en línea.</p>
+        <div class="foot-social">
+          <a href="https://www.instagram.com/jesucristoimperiodevida/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg></a>
+          <a href="https://www.facebook.com/MinisterioJesucristoImperiodeVida/?locale=es_LA" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.9h2.54V9.85c0-2.52 1.5-3.91 3.78-3.91 1.1 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.78-1.63 1.57v1.89h2.78l-.44 2.9h-2.34V22c4.78-.79 8.43-4.94 8.43-9.94Z"/></svg></a>
+          <a href="https://www.youtube.com/@pastoracarmencanate" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7.5a3 3 0 0 0-2.1-2.12C19.05 4.9 12 4.9 12 4.9s-7.05 0-8.9.48A3 3 0 0 0 1 7.5C.5 9.36.5 12 .5 12s0 2.64.5 4.5a3 3 0 0 0 2.1 2.12C4.95 19.1 12 19.1 12 19.1s7.05 0 8.9-.48A3 3 0 0 0 23 16.5c.5-1.86.5-4.5.5-4.5s0-2.64-.5-4.5ZM9.75 15.25v-6.5L15.5 12l-5.75 3.25Z"/></svg></a>
+        </div>
+      </div>
+      <div class="foot-col reveal">
+        <h5>Visítanos</h5>
+        <a href="https://maps.app.goo.gl/pEcGfGguG2gMFt4D7" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 10c0 5.5-8 12-8 12s-8-6.5-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg> El Dorado · La Galería</a>
+        <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:15px;height:15px;vertical-align:-2px"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> Domingo Familiar · 10:00 AM</p>
+        <a href="https://maps.app.goo.gl/pEcGfGguG2gMFt4D7" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 10c0 5.5-8 12-8 12s-8-6.5-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg> Ver mapa y direcciones</a>
+      </div>
+      <div class="foot-col reveal">
+        <h5>Conéctate</h5>
+        <a href="https://www.youtube.com/@pastoracarmencanate" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7.5a3 3 0 0 0-2.1-2.12C19.05 4.9 12 4.9 12 4.9s-7.05 0-8.9.48A3 3 0 0 0 1 7.5C.5 9.36.5 12 .5 12s0 2.64.5 4.5a3 3 0 0 0 2.1 2.12C4.95 19.1 12 19.1 12 19.1s7.05 0 8.9-.48A3 3 0 0 0 23 16.5c.5-1.86.5-4.5.5-4.5s0-2.64-.5-4.5ZM9.75 15.25v-6.5L15.5 12l-5.75 3.25Z"/></svg> Servicios En Vivo</a>
+        <a href="https://www.instagram.com/jesucristoimperiodevida/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg> @jesucristoimperiodevida</a>
+        <a href="https://www.facebook.com/MinisterioJesucristoImperiodeVida/?locale=es_LA" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.9h2.54V9.85c0-2.52 1.5-3.91 3.78-3.91 1.1 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.78-1.63 1.57v1.89h2.78l-.44 2.9h-2.34V22c4.78-.79 8.43-4.94 8.43-9.94Z"/></svg> Ministerio en Facebook</a>
+      </div>
+    </div>
+    <div class="copy">
+      © <span id="year"></span> Ministerio Jesucristo Imperio de Vida · Pastores Benito y Carmen Cañate ·
+      <span class="adm" id="adminLink" title="Acceso administración">Administrar</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ MODAL EVENTO ============ -->
+<div class="modal-bg" id="modal">
+  <div class="modal">
+    <span class="x-close" id="closeModal">&times;</span>
+    <h3 id="modalTitle">Nuevo evento</h3>
+    <p class="sub">Completa los datos. Aparecerá automáticamente en la web.</p>
+    <input type="hidden" id="evId">
+    <div class="field"><label>Nombre del evento</label><input id="evTitle" placeholder="Ej. Vigilia de Avivamiento"></div>
+    <div class="field"><div class="row">
+      <div><label>Fecha de inicio</label><input type="date" id="evStart"></div>
+      <div><label>Fecha de fin (opcional)</label><input type="date" id="evEnd"></div>
+    </div></div>
+    <div class="field"><div class="row">
+      <div><label>Hora</label><input id="evTime" placeholder="Ej. 7:00 PM"></div>
+      <div><label>Lugar (opcional)</label><input id="evPlace" placeholder="Ej. Templo / Zoom"></div>
+    </div></div>
+    <div class="field"><label>Descripción</label><textarea id="evDesc" placeholder="Detalles del evento..."></textarea></div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" id="saveEvent" style="flex:1;justify-content:center">Guardar</button>
+      <button class="btn btn-ghost" id="cancelEvent" style="justify-content:center">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="modalServ">
+  <div class="modal">
+    <span class="x-close" id="closeModalServ">&times;</span>
+    <h3 id="modalServTitle">Nuevo servicio</h3>
+    <p class="sub">Completa los datos. Aparecerá automáticamente en la web.</p>
+    <input type="hidden" id="servId">
+    <div class="field"><label>Nombre del servicio</label><input id="servTitle" placeholder="Ej. Domingo Familiar"></div>
+    <div class="field"><div class="row">
+      <div><label>Día(s)</label><input id="servDay" placeholder="Ej. Domingo / Lunes y Jueves"></div>
+      <div><label>Hora</label><input id="servTime" placeholder="Ej. 10:00 AM"></div>
+    </div></div>
+    <div class="field"><div class="row">
+      <div><label>Modalidad</label><select id="servMod"><option value="presencial">Presencial (templo)</option><option value="zoom">Vía Zoom (en línea)</option></select></div>
+      <div><label>Ícono</label><select id="servIcon"><option value="templo">Templo / Casa</option><option value="oracion">Oración / Fuego</option><option value="intercesion">Intercesión</option><option value="estudio">Estudio / Libro</option></select></div>
+    </div></div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" id="saveService" style="flex:1;justify-content:center">Guardar</button>
+      <button class="btn btn-ghost" id="cancelService" style="justify-content:center">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Firebase SDK (compat) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+/* ---------- icon strings reused ---------- */
+const MONTHS=['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC'];
+
+/* ---------- Firebase (nube) ---------- */
+const firebaseConfig = {
+  apiKey: "AIzaSyDAZ628rSoJrHuoejQ6NiuPKxwESg19yZs",
+  authDomain: "iglesia-imperio-de-vida.firebaseapp.com",
+  projectId: "iglesia-imperio-de-vida",
+  storageBucket: "iglesia-imperio-de-vida.firebasestorage.app",
+  messagingSenderId: "929348135358",
+  appId: "1:929348135358:web:318868759cb684c4b7b1ef",
+  measurementId: "G-RRTW44HNQM"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const auth = firebase.auth();
+// El modo administrador se activa SOLO cuando hay sesión iniciada (Firebase Auth)
+auth.onAuthStateChanged(u=>{ document.body.classList.toggle('admin', !!u); });
+
+/* ---------- nav behaviour ---------- */
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40));
+const menu=document.getElementById('menu'),burger=document.getElementById('burger');
+burger.onclick=()=>menu.classList.toggle('open');
+menu.querySelectorAll('a').forEach(a=>a.onclick=()=>menu.classList.remove('open'));
+document.getElementById('year').textContent=new Date().getFullYear();
+
+/* ---------- reveal on scroll ---------- */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* ---------- almacenamiento de EVENTOS (nube Firestore) ---------- */
+function isoFuture(days){const d=new Date();d.setDate(d.getDate()+days);return d.toISOString().slice(0,10)}
+let events=[
+  {id:'e1',title:'Domingo Familiar Especial',start:isoFuture(7),end:'',time:'10:00 AM',place:'Templo · El Dorado',desc:'Un domingo de celebración para toda la familia. ¡Trae a un invitado!'},
+  {id:'e2',title:'Vigilia de Avivamiento',start:isoFuture(18),end:'',time:'8:00 PM',place:'Templo / En Vivo',desc:'Una noche de adoración, palabra y poder. Transmitida también por YouTube.'}
+];
+function save(d){ db.collection('contenido').doc('eventos').set({lista:d}).catch(e=>console.error('No se pudo guardar eventos:',e)); }
+// Escucha en tiempo real: cualquier cambio se ve al instante en todos los dispositivos
+db.collection('contenido').doc('eventos').onSnapshot(snap=>{
+  const data=snap.data();
+  if(snap.exists && data && Array.isArray(data.lista)) events=data.lista;
+  render();
+}, e=>{ console.error('Error eventos:',e); render(); });
+
+/* ---------- render events ---------- */
+const grid=document.getElementById('evGrid');
+function todayISO(){return new Date().toISOString().slice(0,10)}
+function render(){
+  const t=todayISO();
+  // se muestran solo los vigentes; los pasados se ocultan (no se borran de la nube)
+  const sorted=[...events].filter(e=>(e.end||e.start)>=t).sort((a,b)=>a.start.localeCompare(b.start));
+  grid.innerHTML='';
+  if(!sorted.length){
+    grid.innerHTML='<div class="ev-empty">Pronto anunciaremos nuevos eventos. ¡Mantente atento!</div>';
+    return;
+  }
+  sorted.forEach(e=>{
+    const end=e.end||e.start;
+    const live=(e.start<=t && t<=end);
+    const dt=new Date(e.start+'T00:00:00');
+    const card=document.createElement('div');
+    card.className='ev-card';
+    card.innerHTML=`
+      ${live?'<span class="badge-live"><span class="live-dot"></span> En curso</span>':''}
+      <div class="ev-top">
+        <div class="ev-date"><div class="d">${dt.getDate()}</div><div class="m">${MONTHS[dt.getMonth()]}</div></div>
+        <div>
+          <h4>${esc(e.title)}</h4>
+          <div class="meta">${e.time?esc(e.time):''}${e.time&&e.place?' · ':''}${e.place?esc(e.place):''}${e.end&&e.end!==e.start?' · hasta '+fmt(e.end):''}</div>
+        </div>
+      </div>
+      ${e.desc?`<div class="body">${esc(e.desc)}</div>`:'<div class="body"></div>'}
+      <div class="ev-admin">
+        <button data-edit="${e.id}">Editar</button>
+        <button class="del" data-del="${e.id}">Eliminar</button>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+function fmt(iso){const d=new Date(iso+'T00:00:00');return d.getDate()+' '+MONTHS[d.getMonth()]}
+function esc(s){return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+render();
+
+/* ---------- admin mode (Firebase Auth) ---------- */
+function enterAdmin(){
+  if(document.body.classList.contains('admin'))return;
+  const email=prompt('Correo de administrador:');
+  if(!email)return;
+  const pass=prompt('Contraseña:');
+  if(pass===null)return;
+  auth.signInWithEmailAndPassword(email.trim(),pass)
+    .then(()=>{document.getElementById('eventos').scrollIntoView({behavior:'smooth'});})
+    .catch(()=>alert('Correo o contraseña incorrectos.'));
+}
+document.getElementById('adminLink').onclick=enterAdmin;
+document.getElementById('exitAdmin').onclick=()=>auth.signOut();
+
+/* ---------- modal ---------- */
+const modal=document.getElementById('modal');
+function openModal(ev){
+  document.getElementById('modalTitle').textContent=ev?'Editar evento':'Nuevo evento';
+  document.getElementById('evId').value=ev?ev.id:'';
+  document.getElementById('evTitle').value=ev?ev.title:'';
+  document.getElementById('evStart').value=ev?ev.start:'';
+  document.getElementById('evEnd').value=ev?(ev.end||''):'';
+  document.getElementById('evTime').value=ev?(ev.time||''):'';
+  document.getElementById('evPlace').value=ev?(ev.place||''):'';
+  document.getElementById('evDesc').value=ev?(ev.desc||''):'';
+  modal.classList.add('open');
+}
+function closeModal(){modal.classList.remove('open')}
+document.getElementById('addEvent').onclick=()=>openModal(null);
+document.getElementById('closeModal').onclick=closeModal;
+document.getElementById('cancelEvent').onclick=closeModal;
+modal.onclick=e=>{if(e.target===modal)closeModal()};
+
+document.getElementById('saveEvent').onclick=()=>{
+  const id=document.getElementById('evId').value;
+  const title=document.getElementById('evTitle').value.trim();
+  const start=document.getElementById('evStart').value;
+  if(!title||!start){alert('El nombre y la fecha de inicio son obligatorios.');return;}
+  const data={
+    title,start,
+    end:document.getElementById('evEnd').value,
+    time:document.getElementById('evTime').value.trim(),
+    place:document.getElementById('evPlace').value.trim(),
+    desc:document.getElementById('evDesc').value.trim()
+  };
+  if(id){const i=events.findIndex(e=>e.id===id);if(i>-1)events[i]={...events[i],...data};}
+  else{data.id='e'+Date.now();events.push(data);}
+  save(events);render();closeModal();
+};
+
+grid.addEventListener('click',e=>{
+  const ed=e.target.getAttribute('data-edit');
+  const dl=e.target.getAttribute('data-del');
+  if(ed){const ev=events.find(x=>x.id===ed);if(ev)openModal(ev);}
+  if(dl){if(confirm('¿Eliminar este evento?')){events=events.filter(x=>x.id!==dl);save(events);render();}}
+});
+
+/* ---------- export / import ---------- */
+document.getElementById('exportEvents').onclick=()=>{
+  const blob=new Blob([JSON.stringify(events,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='eventos-imperio-de-vida.json';a.click();
+};
+document.getElementById('importEvents').onclick=()=>document.getElementById('importFile').click();
+document.getElementById('importFile').onchange=ev=>{
+  const f=ev.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=()=>{try{const d=JSON.parse(r.result);if(Array.isArray(d)){events=d;save(events);render();alert('Eventos importados.');}else alert('Archivo inválido.');}catch(e){alert('No se pudo leer el archivo.');}};
+  r.readAsText(f);
+};
+
+/* ---------- SERVICIOS (editable: misma clave y mecánica que eventos) ---------- */
+const SV_ICONS={
+  templo:'<path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v9h14v-9"/><path d="M9.5 19v-5h5v5"/>',
+  oracion:'<path d="M12 2s5 4 5 9a5 5 0 0 1-10 0c0-1.5.7-2.8 1.5-3.5C8.5 9 9 11 10 11c0-2 1-5 2-9Z"/>',
+  intercesion:'<path d="M12 3v8"/><path d="M8 7h8"/><path d="M6 21c0-4 2.7-6 6-6s6 2 6 6"/><path d="M12 11c-1.5 1.5-3 2.5-3 4"/><path d="M12 11c1.5 1.5 3 2.5 3 4"/>',
+  estudio:'<path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5Z"/><path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H13v15h5.5a1.5 1.5 0 0 1 1.5 1.5Z"/>'
+};
+const SV_CLOCK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:15px;height:15px;vertical-align:-2px"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
+let services=[
+  {id:'s1',title:'Domingo Familiar',day:'Domingo',time:'10:00 AM',mod:'presencial',icon:'templo'},
+  {id:'s2',title:'Oración y Liberación',day:'Miércoles',time:'6:30 PM',mod:'presencial',icon:'oracion'},
+  {id:'s3',title:'Oración de Intercesión',day:'Lunes y Jueves',time:'7:00 – 7:30 PM',mod:'zoom',icon:'intercesion'},
+  {id:'s4',title:'Ayunos',day:'Martes',time:'9:00 AM',mod:'zoom',icon:'oracion'},
+  {id:'s5',title:'Clamores',day:'Miér · Vier · Sáb',time:'9:00 – 10:00 AM',mod:'zoom',icon:'intercesion'},
+  {id:'s6',title:'Escuela de Jesús',day:'Viernes',time:'7:00 PM',mod:'zoom',icon:'estudio'}
+];
+function saveS(d){ db.collection('contenido').doc('servicios').set({lista:d}).catch(e=>console.error('No se pudo guardar servicios:',e)); }
+db.collection('contenido').doc('servicios').onSnapshot(snap=>{
+  const data=snap.data();
+  if(snap.exists && data && Array.isArray(data.lista)) services=data.lista;
+  renderS();
+}, e=>{ console.error('Error servicios:',e); renderS(); });
+const servWrap=document.getElementById('servWrap');
+function svIcon(k){return SV_ICONS[k]||SV_ICONS.templo}
+function groupHTML(label,isZoom,list){
+  if(!list.length)return '';
+  let cards='';
+  list.forEach(s=>{
+    cards+=`<div class="card${s.mod==='zoom'?' zoom':''}">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">${svIcon(s.icon)}</svg></div>
+      <span class="day">${esc(s.day)}</span>
+      <h4>${esc(s.title)}</h4>
+      <span class="time">${SV_CLOCK} ${esc(s.time)}</span>
+      <div class="ev-admin">
+        <button data-edits="${s.id}">Editar</button>
+        <button class="del" data-dels="${s.id}">Eliminar</button>
+      </div>
+    </div>`;
+  });
+  const tag=isZoom?'<span class="tag zoom">En línea</span>':'<span class="tag">En el templo</span>';
+  return `<div class="serv-group reveal in"><div class="gh"><b>${esc(label)}</b>${tag}</div><div class="cards">${cards}</div></div>`;
+}
+function renderS(){
+  const pres=services.filter(s=>s.mod!=='zoom');
+  const zoom=services.filter(s=>s.mod==='zoom');
+  let html=groupHTML('Presencial',false,pres)+groupHTML('Vía Zoom',true,zoom);
+  servWrap.innerHTML=html||'<div class="ev-empty">Pronto anunciaremos el calendario de servicios.</div>';
+}
+renderS();
+
+const modalServ=document.getElementById('modalServ');
+function openModalS(s){
+  document.getElementById('modalServTitle').textContent=s?'Editar servicio':'Nuevo servicio';
+  document.getElementById('servId').value=s?s.id:'';
+  document.getElementById('servTitle').value=s?s.title:'';
+  document.getElementById('servDay').value=s?(s.day||''):'';
+  document.getElementById('servTime').value=s?(s.time||''):'';
+  document.getElementById('servMod').value=s?(s.mod||'presencial'):'presencial';
+  document.getElementById('servIcon').value=s?(s.icon||'templo'):'templo';
+  modalServ.classList.add('open');
+}
+function closeModalS(){modalServ.classList.remove('open')}
+document.getElementById('addService').onclick=()=>openModalS(null);
+document.getElementById('closeModalServ').onclick=closeModalS;
+document.getElementById('cancelService').onclick=closeModalS;
+modalServ.onclick=e=>{if(e.target===modalServ)closeModalS()};
+document.getElementById('exitAdminServ').onclick=()=>auth.signOut();
+
+document.getElementById('saveService').onclick=()=>{
+  const id=document.getElementById('servId').value;
+  const title=document.getElementById('servTitle').value.trim();
+  if(!title){alert('El nombre del servicio es obligatorio.');return;}
+  const data={
+    title,
+    day:document.getElementById('servDay').value.trim(),
+    time:document.getElementById('servTime').value.trim(),
+    mod:document.getElementById('servMod').value,
+    icon:document.getElementById('servIcon').value
+  };
+  if(id){const i=services.findIndex(s=>s.id===id);if(i>-1)services[i]={...services[i],...data};}
+  else{data.id='s'+Date.now();services.push(data);}
+  saveS(services);renderS();closeModalS();
+};
+
+servWrap.addEventListener('click',e=>{
+  const ed=e.target.getAttribute('data-edits');
+  const dl=e.target.getAttribute('data-dels');
+  if(ed){const s=services.find(x=>x.id===ed);if(s)openModalS(s);}
+  if(dl){if(confirm('¿Eliminar este servicio?')){services=services.filter(x=>x.id!==dl);saveS(services);renderS();}}
+});
+
+document.getElementById('exportServices').onclick=()=>{
+  const blob=new Blob([JSON.stringify(services,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='servicios-imperio-de-vida.json';a.click();
+};
+document.getElementById('importServices').onclick=()=>document.getElementById('importFileServ').click();
+document.getElementById('importFileServ').onchange=ev=>{
+  const f=ev.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=()=>{try{const d=JSON.parse(r.result);if(Array.isArray(d)){services=d;saveS(services);renderS();alert('Servicios importados.');}else alert('Archivo inválido.');}catch(e){alert('No se pudo leer el archivo.');}};
+  r.readAsText(f);
+};
+</script>
+<script>(function(){var L="img/logo.png";document.querySelectorAll(".auto-logo").forEach(function(i){i.src=L;});})();</script>
+</body>
+</html>
