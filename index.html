@@ -1046,6 +1046,73 @@ document.getElementById('vidGrid').addEventListener('click',e=>{
   if(ed){const v=videos_list.find(x=>x.id===ed);if(v)openModalV(v);}
   if(dl){if(confirm('¿Eliminar este enlace?')){videos_list=videos_list.filter(x=>x.id!==dl);saveV(videos_list);renderV();}}
 });
+  /* ---------- DONACIONES (Nube) ---------- */
+let donInfo = {
+  yappy: "FUNDASEVI",
+  bgDesc: "Banco General\nCuenta Corriente\nFundación Soplo de Esperanza y Vida",
+  bgCta: "03-18-01-13-6089-7",
+  towDesc: "Towerbank / Wise\nCuenta Corriente\nFundación Soplo de Esperanza y Vida\nCorreo: fundacionsoplodeesperanzayvida@gmail.com",
+  towCta: "03010052722"
+};
+
+function saveDon(d){ db.collection('contenido').doc('donaciones').set(d).catch(e=>console.error(e)); }
+
+db.collection('contenido').doc('donaciones').onSnapshot(snap=>{
+  if(snap.exists){ const data=snap.data(); if(data && data.yappy) donInfo=data; }
+  renderDon();
+});
+
+function renderDon(){
+  const g = document.getElementById('donGrid'); if(!g) return;
+  g.innerHTML = `
+    <div class="don-card reveal in">
+      <h4>Directorio Yappy</h4>
+      <p>Búscanos directamente en el directorio de Yappy desde tu aplicación de Banco General.</p>
+      <div class="data">📲 @${esc(donInfo.yappy)}</div>
+    </div>
+    <div class="don-card reveal in">
+      <h4>Banco General</h4>
+      <p>${esc(donInfo.bgDesc).replace(/\n/g, '<br>')}</p>
+      <div class="data">💳 ${esc(donInfo.bgCta)}</div>
+    </div>
+    <div class="don-card reveal in">
+      <h4>Towerbank / Wise</h4>
+      <p>${esc(donInfo.towDesc).replace(/\n/g, '<br>')}</p>
+      <div class="data">💳 ${esc(donInfo.towCta)}</div>
+    </div>
+  `;
+}
+
+const mDon = document.getElementById('modalDon');
+function openModalDon(){
+  document.getElementById('donYappy').value=donInfo.yappy||'';
+  document.getElementById('donBgDesc').value=donInfo.bgDesc||'';
+  document.getElementById('donBgCta').value=donInfo.bgCta||'';
+  document.getElementById('donTowDesc').value=donInfo.towDesc||'';
+  document.getElementById('donTowCta').value=donInfo.towCta||'';
+  mDon.classList.add('open');
+}
+function closeModalDon(){ mDon.classList.remove('open'); }
+
+if(document.getElementById('editDonations')) document.getElementById('editDonations').onclick=openModalDon;
+if(document.getElementById('closeModalDon')) document.getElementById('closeModalDon').onclick=closeModalDon;
+if(document.getElementById('cancelDonations')) document.getElementById('cancelDonations').onclick=closeModalDon;
+mDon.onclick = e => { if(e.target===mDon) closeModalDon(); };
+
+document.getElementById('saveDonations').onclick = () => {
+  donInfo = {
+    yappy: document.getElementById('donYappy').value.trim(),
+    bgDesc: document.getElementById('donBgDesc').value.trim(),
+    bgCta: document.getElementById('donBgCta').value.trim(),
+    towDesc: document.getElementById('donTowDesc').value.trim(),
+    towCta: document.getElementById('donTowCta').value.trim()
+  };
+  saveDon(donInfo); renderDon(); closeModalDon();
+};
+
+auth.onAuthStateChanged(u=>{
+  if(document.getElementById('editDonations')) document.getElementById('editDonations').parentElement.style.display = u ? 'flex' : 'none';
+});
 </script>
 <script>(function(){var L="img/logo.png";document.querySelectorAll(".auto-logo").forEach(function(i){i.src=L;});})();</script>
 </body>
