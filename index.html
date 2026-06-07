@@ -616,7 +616,23 @@ body.admin .donaciones .admin-tools{display:flex}
     </div>
   </div>
 </div>
+<div class="modal-bg" id="modalDon">
+  <div class="modal">
+    <span class="x-close" id="closeModalDon">×</span>
+    <h3 id="modalDonTitle">Editar Cuentas</h3>
+    <div class="field"><label>Directorio Yappy</label><input id="donYappy"></div>
+    <div class="field"><label>Detalles Banco General</label><textarea id="donBgDesc" style="min-height:75px"></textarea></div>
+    <div class="field"><label>Nº Cuenta Banco General</label><input id="donBgCta"></div>
+    <div class="field"><label>Detalles Towerbank / Wise</label><textarea id="donTowDesc" style="min-height:75px"></textarea></div>
+    <div class="field"><label>Nº Cuenta Towerbank</label><input id="donTowCta"></div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" id="saveDonations" style="flex:1;justify-content:center">Guardar</button>
+      <button class="btn btn-ghost" id="cancelDonations" style="justify-content:center">Cancelar</button>
+    </div>
+  </div>
+</div>
 
+  
 <!-- Firebase SDK (compat) -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
