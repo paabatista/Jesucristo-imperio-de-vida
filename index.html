@@ -822,11 +822,16 @@ function groupHTML(label,isZoom,list){
   if(!list.length)return '';
   let cards='';
   list.forEach(s=>{
+    // Botón pequeño y elegante para Zoom
+    const botonZoom = s.mod === 'zoom' ? `<a href="https://zoom.us/j/83865514400" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;margin-top:16px;background:var(--red-bright);color:#fff;padding:8px 14px;border-radius:3px;font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;transition:.3s;text-decoration:none;"><span style="width:6px;height:6px;background:#fff;border-radius:50%;display:inline-block;animation:pulse 1.8s infinite"></span> Unirse a la reunión</a>` : '';
+
     cards+=`<div class="card${s.mod==='zoom'?' zoom':''}">
       <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">${svIcon(s.icon)}</svg></div>
       <span class="day">${esc(s.day)}</span>
       <h4>${esc(s.title)}</h4>
       <span class="time">${SV_CLOCK} ${esc(s.time)}</span>
+      <br>
+      ${botonZoom}
       <div class="ev-admin">
         <button data-edits="${s.id}">Editar</button>
         <button class="del" data-dels="${s.id}">Eliminar</button>
@@ -916,14 +921,31 @@ function renderG(){
   galeria.forEach(g=>{
     const item = document.createElement('div');
     item.className = 'gal-item reveal in';
+    item.style.cursor = 'pointer'; // Muestra la manito al pasar el mouse
+    
+    // Detecta automáticamente si el enlace es un video
+    const urlLower = g.url.toLowerCase();
+    const isVid = urlLower.includes('.mp4') || urlLower.includes('.mov') || urlLower.includes('.webm');
+    
+    // Si es video lo pone en silencio y reproduciéndose solo, si no, usa una imagen normal
+    const mediaHtml = isVid 
+      ? `<video src="${esc(g.url)}" muted loop autoplay playsinline style="width:100%;height:100%;object-fit:cover;"></video>` 
+      : `<img src="${esc(g.url)}" alt="Foto de galería">`;
+
     item.innerHTML = `
-      <img src="${esc(g.url)}" alt="Foto de galería">
+      ${mediaHtml}
       ${g.desc ? `<div class="cap">${esc(g.desc)}</div>` : ''}
       <div class="ev-admin">
         <button data-editg="${g.id}">Editar</button>
         <button data-delg="${g.id}">Eliminar</button>
       </div>
     `;
+    
+    // Al hacer clic, abre la imagen o video en pantalla completa (ignorando los botones de admin)
+    item.onclick = (e) => {
+      if(!e.target.closest('.ev-admin')) openLightbox(g.url, !!isVid);
+    };
+    
     gGrid.appendChild(item);
   });
   if(document.body.classList.contains('admin')) {
@@ -1114,6 +1136,30 @@ document.getElementById('saveDonations').onclick = () => {
 auth.onAuthStateChanged(u=>{
   if(document.getElementById('editDonations')) document.getElementById('editDonations').parentElement.style.display = u ? 'flex' : 'none';
 });
+  /* ---------- LIGHTBOX (Agrandar Imagen/Video de Galería) ---------- */
+// Reusamos tu propia clase modal-bg para que comparta el fondo borroso oscuro
+const lb = document.createElement('div');
+lb.className = 'modal-bg'; 
+lb.style.zIndex = '3000'; // Lo pone por encima de todo
+lb.innerHTML = '<span class="x-close" id="lbClose" style="font-size:2.5rem;top:20px;right:30px;color:var(--muted);transition:.2s;cursor:pointer">&times;</span><div id="lbContent" style="display:flex;justify-content:center;align-items:center;width:100%;height:100%;padding:40px;"></div>';
+document.body.appendChild(lb);
+
+function openLightbox(url, isVid){
+  const content = document.getElementById('lbContent');
+  // Crea el video con controles y sonido, o la imagen grande
+  content.innerHTML = isVid 
+    ? `<video src="${url}" controls autoplay style="max-width:100%;max-height:85vh;border-radius:6px;box-shadow:0 10px 40px rgba(0,0,0,.9);outline:none;"></video>`
+    : `<img src="${url}" style="max-width:100%;max-height:85vh;border-radius:6px;box-shadow:0 10px 40px rgba(0,0,0,.9);">`;
+  lb.style.display = 'flex';
+}
+
+// Para cerrar tocando la X o fuera de la foto
+lb.onclick = (e) => {
+  if(e.target === lb || e.target.id === 'lbClose') {
+    lb.style.display = 'none';
+    document.getElementById('lbContent').innerHTML = ''; // Detiene el video al cerrar
+  }
+};
 </script>
 <script>(function(){var L="img/logo.png";document.querySelectorAll(".auto-logo").forEach(function(i){i.src=L;});})();</script>
 </body>
