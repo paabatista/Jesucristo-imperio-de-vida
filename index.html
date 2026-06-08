@@ -1090,9 +1090,12 @@ function renderDon(){
   g.innerHTML = `
     <div class="don-card reveal in">
       <h4>Directorio Yappy</h4>
-      <p>Búscanos directamente en el directorio de Yappy desde tu aplicación bancaria o App de Yappy.</p>
+      <p>Búscanos directamente en el directorio de Yappy desde tu aplicación bancaria o descarga el App de Yappy.</p>
       <div class="data" title="Haz doble clic para seleccionar">📲 @${esc(donInfo.yappy)}</div>
-      <div style="margin-top:18px;color:var(--muted);font-size:0.75rem;font-style:italic;">Abre tu app para realizar el pago</div>
+      <div style="margin-top:18px;display:flex;justify-content:center;gap:16px;">
+        <a href="https://apps.apple.com/pa/app/yappy/id1585857307" target="_blank" rel="noopener" style="color:var(--gold-bright);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;text-decoration:none;transition:.2s;">▶ App Store</a>
+        <a href="https://play.google.com/store/apps/details?id=com.yappy" target="_blank" rel="noopener" style="color:var(--gold-bright);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;text-decoration:none;transition:.2s;">▶ Google Play</a>
+      </div>
     </div>
     <div class="don-card reveal in">
       <h4>Banco General</h4>
@@ -1105,7 +1108,7 @@ function renderDon(){
       <p>${esc(donInfo.towDesc).replace(/\n/g, '<br>')}</p>
       <div class="data" title="Haz doble clic para seleccionar">💳 ${esc(donInfo.towCta)}</div>
       <div style="margin-top:18px;display:flex;justify-content:center;gap:16px;">
-        <a href="https://online.towerbank.com/TowerOnline_Internet/Login" target="_blank" rel="noopener" style="color:var(--gold-bright);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;text-decoration:none;">▶ Towerbank</a>
+        <a href="https://www.towerbank.com/" target="_blank" rel="noopener" style="color:var(--gold-bright);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;text-decoration:none;">▶ Towerbank</a>
         <a href="https://wise.com/login" target="_blank" rel="noopener" style="color:var(--gold-bright);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;text-decoration:none;">▶ Wise</a>
       </div>
     </div>
