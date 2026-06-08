@@ -1101,7 +1101,7 @@ function renderDon(){
       <h4>Banco General</h4>
       <p>${esc(donInfo.bgDesc).replace(/\n/g, '<br>')}</p>
       <div class="data" title="Haz doble clic para seleccionar">💳 ${esc(donInfo.bgCta)}</div>
-      <a href="https://www.bgeneral.com/cuentajoven/?gad_source=1&gad_campaignid=23734210464&gbraid=0AAAAAow3oppbBh2ieFlao0iepcUvgwovN&gclid=Cj0KCQjwrZTRBhDSARIsAHidYfc5j6PbolHj26Uj0wy2A8G1HaQttpfJ5bpQwCnpHwcra_AWCbTudFIaAtiBEALw_wcB">▶ Ir a Banca en Línea</a>
+      <a href="https://www.bgeneral.com/cuentajoven/" target="_blank" rel="noopener" style="display:inline-block;margin-top:18px;color:var(--gold-bright);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;text-decoration:none;transition:.2s;">▶ Ir a Banca en Línea</a>
     </div>
     <div class="don-card reveal in">
       <h4>Towerbank / Wise</h4>
@@ -1114,7 +1114,7 @@ function renderDon(){
     </div>
   `;
 }
-
+  
 const mDon = document.getElementById('modalDon');
 function openModalDon(){
   document.getElementById('donYappy').value=donInfo.yappy||'';
