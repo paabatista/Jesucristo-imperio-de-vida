@@ -687,13 +687,17 @@ db.collection('contenido').doc('eventos').onSnapshot(snap=>{
 
 /* ---------- render events ---------- */
 const grid=document.getElementById('evGrid');
-function todayISO(){
-  const d = new Date();
-  const yyyy = d.getFullYear();
-  const mm = String(d.getMonth() + 1).padStart(2, '0');
-  const dd = String(d.getDate()).padStart(2, '0');
-  return `${yyyy}-${mm}-${dd}`;
-}
+function todayISO(){const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function render(){
+  const t=todayISO();
+  // se muestran solo los vigentes; los pasados se ocultan (no se borran de la nube)
+  const sorted=[...events].filter(e=>(e.end||e.start)>=t).sort((a,b)=>a.start.localeCompare(b.start));
+  grid.innerHTML='';
+  if(!sorted.length){
+    grid.innerHTML='<div class="ev-empty">Pronto anunciaremos nuevos eventos. ¡Mantente atento!</div>';
+    return;
+  }
+  
   sorted.forEach(e=>{
     const end=e.end||e.start;
     const live=(e.start<=t && t<=end);
