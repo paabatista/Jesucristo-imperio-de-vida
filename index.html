@@ -187,6 +187,10 @@ header.nav.scrolled .brand img{height:34px}
 .ev-card .body{padding:14px 22px 22px;color:var(--muted);font-size:.93rem}
 .badge-live{position:absolute;top:14px;right:14px;font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:#fff;background:var(--red-bright);padding:4px 9px;border-radius:2px;display:inline-flex;align-items:center;gap:6px;box-shadow:0 0 16px rgba(200,32,42,.5)}
 .badge-live .live-dot{width:6px;height:6px}
+.badge-past{position:absolute;top:14px;right:14px;font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:#cbb89a;background:rgba(255,255,255,.06);border:1px solid var(--line);padding:4px 9px;border-radius:2px}
+.ev-past{opacity:.5}
+.ev-top h4{padding-right:74px}
+body.admin .ev-past{opacity:.72}
 .ev-admin{display:none;gap:8px;padding:0 22px 20px}
 .ev-admin button{font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;padding:7px 12px;border-radius:2px;cursor:pointer;border:1px solid var(--line);background:transparent;color:var(--muted);transition:.25s}
 .ev-admin button:hover{color:var(--cream);border-color:var(--gold-deep)}
@@ -657,7 +661,7 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const auth = firebase.auth();
 // El modo administrador se activa SOLO cuando hay sesión iniciada (Firebase Auth)
-auth.onAuthStateChanged(u=>{ document.body.classList.toggle('admin', !!u); });
+auth.onAuthStateChanged(u=>{ document.body.classList.toggle('admin', !!u); if(typeof render==='function') render(); });
 
 /* ---------- nav behaviour ---------- */
 const nav=document.getElementById('nav');
@@ -691,21 +695,26 @@ function todayISO(){const d=new Date(); return d.getFullYear()+'-'+String(d.getM
 function render(){
   const t=todayISO();
   // se muestran solo los vigentes; los pasados se ocultan (no se borran de la nube)
-  const sorted=[...events].filter(e=>(e.end||e.start)>=t).sort((a,b)=>a.start.localeCompare(b.start));
+  const isAdmin=document.body.classList.contains('admin');
+  const future=[...events].filter(e=>(e.end||e.start)>=t).sort((a,b)=>a.start.localeCompare(b.start));
+  const pasados=[...events].filter(e=>(e.end||e.start)<t).sort((a,b)=>b.start.localeCompare(a.start));
+  // Visitante: solo vigentes/futuros. Administrador: TODOS, para poder editar o borrar los pasados y duplicados.
+  const visible=isAdmin?future.concat(pasados):future;
   grid.innerHTML='';
-  if(!sorted.length){
+  if(!visible.length){
     grid.innerHTML='<div class="ev-empty">Pronto anunciaremos nuevos eventos. ¡Mantente atento!</div>';
     return;
   }
   
-  sorted.forEach(e=>{
+  visible.forEach(e=>{
     const end=e.end||e.start;
     const live=(e.start<=t && t<=end);
+    const past=end<t;
     const dt=new Date(e.start+'T00:00:00');
     const card=document.createElement('div');
-    card.className='ev-card';
+    card.className='ev-card'+(past?' ev-past':'');
     card.innerHTML=`
-      ${live?'<span class="badge-live"><span class="live-dot"></span> En curso</span>':''}
+      ${live?'<span class="badge-live"><span class="live-dot"></span> En curso</span>':(past?'<span class="badge-past">Finalizado</span>':'')}
       <div class="ev-top">
         <div class="ev-date"><div class="d">${dt.getDate()}</div><div class="m">${MONTHS[dt.getMonth()]}</div></div>
         <div>
