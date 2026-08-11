@@ -835,7 +835,7 @@ function groupHTML(label,isZoom,list){
   let cards='';
   list.forEach(s=>{
     // Botón pequeño y elegante para Zoom
-    const botonZoom = s.mod === 'zoom' ? `<a href="https://zoom.us/j/83865514400" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;margin-top:16px;background:var(--red-bright);color:#fff;padding:8px 14px;border-radius:3px;font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;transition:.3s;text-decoration:none;"><span style="width:6px;height:6px;background:#fff;border-radius:50%;display:inline-block;animation:pulse 1.8s infinite"></span> Unirse a la reunión</a>` : '';
+    const botonZoom = s.mod === 'zoom' ? `<a href="https://us02web.zoom.us/j/82836151353" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;margin-top:16px;background:var(--red-bright);color:#fff;padding:8px 14px;border-radius:3px;font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;transition:.3s;text-decoration:none;"><span style="width:6px;height:6px;background:#fff;border-radius:50%;display:inline-block;animation:pulse 1.8s infinite"></span> Unirse a la reunión</a>` : '';
 
     cards+=`<div class="card${s.mod==='zoom'?' zoom':''}">
       <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">${svIcon(s.icon)}</svg></div>
